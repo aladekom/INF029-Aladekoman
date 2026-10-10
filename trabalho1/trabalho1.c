@@ -91,7 +91,7 @@ int teste(int a)
  */
 int q1(char data[])
 {
- 
+  int datavalida = 1;
 
   //quebrar a string data em strings sDia, sMes, sAno
     int dia, mes, ano;
@@ -165,6 +165,46 @@ int q1(char data[])
     4 -> datainicial > datafinal
     Caso o cálculo esteja correto, os atributos qtdDias, qtdMeses e qtdAnos devem ser preenchidos com os valores correspondentes.
  */
+ void pegardata(char data[], int *dia, int *mes, int *ano){
+
+        *dia=0;
+        *mes=0;
+        *ano=0;
+        int acumulador = 0; int etapa=0;
+        int diaanterior=0, mesanterior=0, anoanterior=0;
+
+        for(int i =0; data[i]!= '\0'&& data[i]!= '\n';i++){
+        
+            if(data[i]>= '0'&& data[i]<= '9'){
+                acumulador= acumulador*10 + (data[i]-'0');
+            }
+            else if (data[i]== '/'){
+                
+                if (etapa==0){
+                    *dia=acumulador;
+                    acumulador=0;
+                    etapa++;
+                }
+                else if (etapa==1){
+                    *mes=acumulador;
+                    acumulador=0;
+                    etapa++;
+                }
+                        
+                }
+
+        }
+            if (etapa==2){
+                    *ano=acumulador;
+                }  
+                if  (etapa!= 2){
+                *ano= acumulador;
+                }
+                if ( *ano<100){
+                    *ano+=2000;
+                }
+
+            }
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
 
@@ -178,14 +218,64 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       dma.retorno = 3;
       return dma;
     }else{
-      //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
-
-
-      //se tudo der certo
-      dma.retorno = 1;
-      return dma;
+         int diaini, mesini, anoini;
+    int diafin,mesfin, anofin;
+    int qntd,qntm,qnta;
+    
+            pegardata(datainicial ,&diaini, &mesini, &anoini);
+            pegardata(datafinal ,&diafin, &mesfin, &anofin);
+                    if (anoini>anofin){
+                        dma.retorno = 4;
+                        return dma; 
+                    }
+                   else if (anoini==anofin && mesini>mesfin){
+                        dma.retorno = 4;
+                        return dma; 
+                    }
+                    else if (anoini==anofin && mesini==mesfin && diaini>diafin){
+                      dma.retorno = 4;
+                        return dma;         
+                    }
+                    else{
+                        qntd= diafin-diaini;
+                        qntm= mesfin-mesini;
+                        qnta= anofin-anoini;
+                        int diadomesanterior, mesanterior=mesfin-1, anoanterior=anofin;
+                            if(qntd<0){
+                                qntm--;
+                            
+                            if (mesanterior==0){
+                                mesanterior=12;
+                                anoanterior--;
+                            }
+                            if(mesanterior==1 || mesanterior==3 || mesanterior==5 || mesanterior==7 || mesanterior==8 || mesanterior==10 || mesanterior==12){
+                                diadomesanterior=31;
+                            }
+                            else if (mesanterior==4 || mesanterior==6 || mesanterior==9 || mesanterior==11){
+                                diadomesanterior=30;
+                            }
+                           int bissexto = (anoanterior % 4 == 0 && anoanterior % 100 != 0) || (anoanterior % 400 == 0);
+                                if (mesanterior == 2) {
+                                    if (bissexto) {
+                                        diadomesanterior = 29;
+                                    } else {
+                                        diadomesanterior = 28;
+                                    }
+                                }
+                        
+                        qntd+=diadomesanterior;
+                            }
+                            if (qntm<0){
+                                qntm+=12;
+                                qnta--;
+                            }
+                                    dma.qtdDias = qntd;
+                                    dma.qtdMeses = qntm;
+                                    dma.qtdAnos = qnta;
+                                    dma.retorno=1;
+                                    return dma;
+                    
+                        }
       
     }
     
