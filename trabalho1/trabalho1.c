@@ -293,9 +293,15 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
-
-    
+    int qtdOcorrencias = 0;
+    for (int i=0; texto[i] != '\0'; i++){
+         if(isCaseSensitive ==1 && texto[i] == c){
+            qtdOcorrencias++;
+         } else if(isCaseSensitive != 1 && (texto[i] == c || texto[i] == c + 32 || texto[i] == c - 32)){
+            qtdOcorrencias++;
+         }
+    }
+   
     return qtdOcorrencias;
 }
 
@@ -316,10 +322,30 @@ int q3(char *texto, char c, int isCaseSensitive)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+    int c1=0, c2=0;
+    for (int i=0; strBusca[c1] != '\0'; i++){
+            c1++;
+    }
 
+  for (int i=0; strTexto[i] != '\0'; i++){
+    int achou = 1;
+    for (int j=0; strBusca[j] != '\0'; j++){    
+        if (strBusca[j] != strTexto[i+j]){
+            achou = 0;
+            break;
+        }
+    }
+        if(achou==1){
+            posicoes[qtdOcorrencias*2]= i+1;
+            posicoes[qtdOcorrencias*2+1]= i+c1;
+            qtdOcorrencias++;
+}
+    
+  }
     return qtdOcorrencias;
 }
+
 
 /*
  Q5 = inverte número
@@ -333,7 +359,21 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
-
+    int contador =0;
+    int v[10];
+    int p = num;
+ while(p >0){
+    p=p/10;
+    contador++;    
+ }
+ for(int i=0; i<contador;i++){
+    v[i]=num%10;
+    num=num/10;
+ }
+ num=0;
+ for (int i=0;i<=contador-1; i++){
+    num=num*10+v[i];
+ }
     return num;
 }
 
@@ -349,7 +389,30 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int v[15];
+    int v2[15];
+    int qtdOcorrencias = 0;
+    for(int i=0; i<15 ; i++){
+        v[i]=numerobase%10;
+        numerobase=numerobase/10;
+    }
+    for(int i=0; i<15 ; i++){
+        v2[i]=numerobusca%10;
+        numerobusca=numerobusca/10;
+    }
+    for(int i=15;i>=0;i--){
+        int achou=1;
+        for(int j=15; j>=0 ;j--){
+            if (v2[j] != v[i+j]){
+                achou = 0;
+                break;
+            }
+            if (achou==1){
+                qtdOcorrencias++;
+
+            }
+        }
+    }
     return qtdOcorrencias;
 }
 
