@@ -389,30 +389,58 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int v[15];
-    int v2[15];
+    int v[15], v2[15];
+    int c1 = 0, c2 = 0;
     int qtdOcorrencias = 0;
-    for(int i=0; i<15 ; i++){
-        v[i]=numerobase%10;
-        numerobase=numerobase/10;
+
+   
+    if (numerobase == 0) {
+        v[0] = 0;
+        c1 = 1;
+    } else {
+        while (numerobase > 0) {
+            v[c1] = numerobase % 10;
+            c1++;
+            numerobase /= 10;
+        }
+        for (int i = 0; i < c1 / 2; i++) {
+            int aux = v[i];
+            v[i] = v[c1 - 1 - i];
+            v[c1 - 1 - i] = aux;
+        }
     }
-    for(int i=0; i<15 ; i++){
-        v2[i]=numerobusca%10;
-        numerobusca=numerobusca/10;
+
+    if (numerobusca == 0) {
+        v2[0] = 0;
+        c2 = 1;
+    } else {
+        while (numerobusca > 0) {
+            v2[c2] = numerobusca % 10;
+            c2++;
+            numerobusca /= 10;
+        }
+        // Inverte v2 para ficar na ordem normal
+        for (int i = 0; i < c2 / 2; i++) {
+            int aux = v2[i];
+            v2[i] = v2[c2 - 1 - i];
+            v2[c2 - 1 - i] = aux;
+        }
     }
-    for(int i=15;i>=0;i--){
-        int achou=1;
-        for(int j=15; j>=0 ;j--){
-            if (v2[j] != v[i+j]){
+
+
+    for (int i = 0; i <= c1 - c2; i++) {
+        int achou = 1;
+        for (int j = 0; j < c2; j++) {
+            if (v[i + j] != v2[j]) {
                 achou = 0;
                 break;
             }
-            if (achou==1){
-                qtdOcorrencias++;
-
-            }
+        }
+        if (achou == 1) {
+            qtdOcorrencias++;
         }
     }
+
     return qtdOcorrencias;
 }
 
