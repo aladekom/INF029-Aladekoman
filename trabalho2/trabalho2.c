@@ -58,7 +58,6 @@
            }
         }
         
-
         return retorno;
     
 
@@ -78,21 +77,28 @@
         int temEspaco = 0;
         int posicao_invalida = 0;
 
-        if (posicao_invalida)
-            retorno = POSICAO_INVALIDA;
+        if (ehPosicaoValida(posicao) == POSICAO_INVALIDA)
+            posicao_invalida = 1;
+      if(vetorPrincipal[posicao - 1].valor != NULL)
+            existeEstruturaAuxiliar = 1;
+        if(vetorPrincipal[posicao - 1].quantidade < vetorPrincipal[posicao - 1].tamanho)
+            temEspaco = 1;
+
         else
         {
             // testar se existe a estrutura auxiliar
             if (existeEstruturaAuxiliar)
             {
                 if (temEspaco)
-                {
+                { 
+                        vetorPrincipal[posicao - 1].valor[vetorPrincipal[posicao - 1].quantidade] = valor;
+                        vetorPrincipal[posicao - 1].quantidade++;
                     //insere
                     retorno = SUCESSO;
                 }
                 else
                 {
-                    retorno = SEM_ESPACO;
+                    retorno = SEM_ESPACO
                 }
             }
             else
