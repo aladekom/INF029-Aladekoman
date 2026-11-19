@@ -162,15 +162,15 @@
             retorno = SEM_ESTRUTURA_AUXILIAR;
         else if (vetorPrincipal[posicao -1].quantidade == 0)
             retorno = ESTRUTURA_AUXILIAR_VAZIA;
-        }
+        
         else{ 
             int achou=-1;
             for(int i=0; i<vetorPrincipal[posicao -1].quantidade; i++){
-                if(vetorPrincipal[posicao-1]==valor){
+                if(vetorPrincipal[posicao-1].valor[i]==valor){
                     achou=i;
                     break;
                 }
-            }
+                    }
                 if (achou==-1){
                     retorno= NUMERO_INEXISTENTE;
                 }
@@ -183,7 +183,7 @@
                 retorno= SUCESSO;
                   }
             
-        
+                }
         return retorno;
     }
 
@@ -210,12 +210,22 @@
         POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
     */
     int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
-    {
-
+    {   
         int retorno = 0;
-
+        if (ehPosicaoValida(posicao) == POSICAO_INVALIDA)
+            retorno= POSICAO_INVALIDA;
+        else if (vetorPrincipal[posicao-1].valor== NULL)
+            retorno= SEM_ESTRUTURA_AUXILIAR;
+        else{
+        for(int i=0; i<vetorPrincipal[posicao-1].quantidade; i++){
+            vetorAux[i]=vetorPrincipal[posicao-1].valor[i];
+            
+        }
+         retorno= SUCESSO;
+              }
         return retorno;
     }
+
 
     /*
     Objetivo: retorna os números ordenados da estrutura auxiliar da posição 'posicao (1..10)'.
