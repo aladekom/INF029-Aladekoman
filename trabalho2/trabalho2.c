@@ -123,7 +123,20 @@
     */
     int excluirNumeroDoFinaldaEstrutura(int posicao)
     {
+    
         int retorno = SUCESSO;
+        
+        if (ehPosicaoValida(posicao) == POSICAO_INVALIDA)
+            retorno= POSICAO_INVALIDA;
+        else if (vetorPrincipal[posicao -1].valor == NULL)
+            retorno = SEM_ESTRUTURA_AUXILIAR;
+        else if (vetorPrincipal[posicao -1].quantidade == 0)
+            retorno = ESTRUTURA_AUXILIAR_VAZIA;
+        else{
+            
+        vetorPrincipal[posicao -1].quantidade--;
+            retorno = SUCESSO;
+        }
         return retorno;
     }
 
@@ -143,6 +156,18 @@
     int excluirNumeroEspecificoDeEstrutura(int posicao, int valor)
     {
         int retorno = SUCESSO;
+         if (ehPosicaoValida(posicao) == POSICAO_INVALIDA)
+            retorno= POSICAO_INVALIDA;
+        else if (vetorPrincipal[posicao -1].valor == NULL)
+            retorno = SEM_ESTRUTURA_AUXILIAR;
+        else if (vetorPrincipal[posicao -1].quantidade == 0)
+            retorno = ESTRUTURA_AUXILIAR_VAZIA;
+        else if( vetorPrincipal[posicao-1].valor[vetorPrincipal[posicao-1].quantidade-1] != valor){
+            retorno = NUMERO_INEXISTENTE;
+        }
+        else{
+            
+        }
         return retorno;
     }
 
