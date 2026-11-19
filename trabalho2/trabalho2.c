@@ -162,12 +162,28 @@
             retorno = SEM_ESTRUTURA_AUXILIAR;
         else if (vetorPrincipal[posicao -1].quantidade == 0)
             retorno = ESTRUTURA_AUXILIAR_VAZIA;
-        else if( vetorPrincipal[posicao-1].valor[vetorPrincipal[posicao-1].quantidade-1] != valor){
-            retorno = NUMERO_INEXISTENTE;
         }
-        else{
+        else{ 
+            int achou=-1;
+            for(int i=0; i<vetorPrincipal[posicao -1].quantidade; i++){
+                if(vetorPrincipal[posicao-1]==valor){
+                    achou=i;
+                    break;
+                }
+            }
+                if (achou==-1){
+                    retorno= NUMERO_INEXISTENTE;
+                }
+                  else{
+                     
+                    for (int i=achou; i<vetorPrincipal[posicao-1].quantidade-1; i++){
+                        vetorPrincipal[posicao-1].valor[i]=vetorPrincipal[posicao-1].valor[i+1];
+                    }
+                vetorPrincipal[posicao-1].quantidade--;
+                retorno= SUCESSO;
+                  }
             
-        }
+        
         return retorno;
     }
 
