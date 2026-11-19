@@ -226,7 +226,6 @@
         return retorno;
     }
 
-
     /*
     Objetivo: retorna os números ordenados da estrutura auxiliar da posição 'posicao (1..10)'.
     os números devem ser armazenados em vetorAux
@@ -239,8 +238,20 @@
     int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[])
     {
 
-        int retorno = 0;
-
+        int retorno = getDadosEstruturaAuxiliar( posicao, vetorAux);
+        if(retorno==SUCESSO){
+            int qtd = vetorPrincipal[posicao - 1].quantidade;
+                for (int i = 0; i < qtd - 1; i++) {
+    for (int j = i + 1; j < qtd; j++) {
+        if (vetorAux[i] > vetorAux[j]) {
+            int aux = vetorAux[i];
+            vetorAux[i] = vetorAux[j];
+            vetorAux[j] = aux;
+        }
+    }
+}
+        }
+        
         
         return retorno;
     }
@@ -257,6 +268,23 @@
     {
 
         int retorno = 0;
+        int vazio=0;
+        for(int i=0; i<TAM; i++){
+            if(vetorPrincipal[i].valor==NULL)
+                vazio++;
+        }
+        if (vazio==TAM)
+            retorno=TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+        else{
+            for(int i=0; i<TAM; i++){
+                if(vetorPrincipal[i].valor!=NULL){
+                    for(int j=0; j<vetorPrincipal[i].quantidade;j++){
+                        vetorAux[j]=vetorPrincipal[i].valor[j];
+                    }
+                }
+            }
+            retorno=SUCESSO;
+        }
         return retorno;
     }
 
